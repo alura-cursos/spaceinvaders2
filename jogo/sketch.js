@@ -37,7 +37,7 @@ function setup() {
     // criando um palco com 900 de largura e 600 de altura
     createCanvas(900, 600);
     posicaoNave = createVector(400, 500);
-    trilhaSonora.loop();
+    //trilhaSonora.loop();
 
     for (let i = 0; i < quantidadeAliens; i = i + 1) {
         //faça algo
@@ -49,27 +49,31 @@ function setup() {
 
 //desenhando nosso atores - igual ao bloco "sempre" do scracth
 function draw() {
-    if(todoMundoMorto()){
-        
-    }else{
-         // pintar o fundo do palco de cinza
+
+    // pintar o fundo do palco de cinza
     background(100);
-    movimentaMisseis();
-    //centralizando a posição da nave
-    posicaoNave.x = mouseX - imagemNave.width / 2;
-    //desenhar a nave
-    image(imagemNave, posicaoNave.x, posicaoNave.y);
+    if (todosAliensEstaoMortos()) {
+        textSize(80);
+        textAlign(CENTER);
+        text("Parabéns", width/2, height/2);
+    } else {
+        movimentaMisseis();
+        //centralizando a posição da nave
+        posicaoNave.x = mouseX - imagemNave.width / 2;
+        //desenhar a nave
+        image(imagemNave, posicaoNave.x, posicaoNave.y);
 
-    verificaColisao();
+        verificaColisao();
 
-    movimentarAlien();
-    desenhaAlien();
-    desenhaMisseis();
-    fill(255);
-    textSize(30);
-    text("Pontuação: "+pontuacao, 10,80);
+        movimentarAlien();
+        desenhaAlien();
+        desenhaMisseis();
+        fill(255);
+        textSize(30);
+        text("Pontuação: " + pontuacao, 10, 80);
+
     }
-   
+
 }
 //quando o mouse for pressionado
 function mousePressed() {
@@ -81,17 +85,17 @@ function verificaColisao() {
     //para cada missil dentro do jogo
     for (let posicao of posicoesMisseis) {
         //verficar a colisao com todos os aliens
-        for(let i=0 ; i<quantidadeAliens ; i = i+1){
+        for (let i = 0; i < quantidadeAliens; i = i + 1) {
             let posicaoAlienDaLista = calcularPosicaoAlien(i);
             let numeroFantasia = aliens[i];
-            if(alienMorto(numeroFantasia) == false){
+            if (alienEstaMorto(numeroFantasia) == false) {
                 let imagemAlien = imagensAlien[numeroFantasia];
                 //se o missil está para esquerda OU (||)  para direita OU  para baixo OU para cima
                 if ((posicao.x + imagemMissil.width < posicaoAlienDaLista.x ||
-                     posicao.x > posicaoAlienDaLista.x + imagemAlien.width ||
-                     posicao.y > posicaoAlienDaLista.y + imagemAlien.height ||
-                     posicao.y + imagemMissil.height < posicaoAlienDaLista.y) == false
-                   ) {
+                    posicao.x > posicaoAlienDaLista.x + imagemAlien.width ||
+                    posicao.y > posicaoAlienDaLista.y + imagemAlien.height ||
+                    posicao.y + imagemMissil.height < posicaoAlienDaLista.y) == false
+                ) {
                     //o alien está morto
                     aliens[i] = -1;
                     pontuacao = pontuacao + 10;
@@ -105,7 +109,7 @@ function desenhaAlien() {
     for (let i = 0; i < quantidadeAliens; i = i + 1) {
         let numeroFantasia = aliens[i];
         //se o numero da fantasia for diferente(!=) de -1 
-        if(alienMorto(numeroFantasia) == false){
+        if (alienEstaMorto(numeroFantasia) == false) {
             //desenha o alien
             let posicao = calcularPosicaoAlien(i);
             image(imagensAlien[numeroFantasia], posicao.x, posicao.y);
@@ -140,22 +144,22 @@ function movimentaMisseis() {
     }
 }
 
-function calcularPosicaoAlien(indiceAlien){
+function calcularPosicaoAlien(indiceAlien) {
     let posicao = createVector();
-    posicao.x = indiceAlien*100 + deslocamentoAlien;
+    posicao.x = indiceAlien * 100 + deslocamentoAlien;
     posicao.y = 150;
     return posicao;
 }
 
-function todoMundoMorto() {
+function alienEstaMorto(fantasia) {
+    return fantasia == -1;
+}
+
+function todosAliensEstaoMortos() {
     for (let alien of aliens) {
-        if (!alienMorto(alien)) {
+        if (alienEstaMorto(alien) == false) {
             return false;
         }
     }
     return true;
-}
-
-function alienMorto(fantasia) {
-    return fantasia == -1;
 }
