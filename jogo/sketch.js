@@ -1,3 +1,8 @@
+let cenas = {
+    jogo : 0,
+    vitoria : 1,
+    derrota: 2
+}
 let chanceDeAtirar = 0.005;
 
 let imagemNave;
@@ -21,6 +26,8 @@ let velocidadeMissil = 5;
 let pontuacao = 0;
 
 let trilhaSonora;
+
+let cenaAtual = 0;
 
 //preparando o ambiente de trabalho
 //carrengado as fantasias do nosso jogo
@@ -56,35 +63,53 @@ function setup() {
 
 //desenhando nosso atores - igual ao bloco "sempre" do scracth
 function draw() {
-
     // pintar o fundo do palco de cinza
     background(100);
-    if (todosAliensEstaoMortos()) {
-        textSize(80);
-        textAlign(CENTER);
-        text("Parabéns", width / 2, height / 2);
-    } else {
-        movimentaMisseis();
-        //centralizando a posição da nave
-        posicaoNave.x = mouseX - imagemNave.width / 2;
-        //desenhar a nave
-        image(imagemNave, posicaoNave.x, posicaoNave.y);
 
-        verificaColisaoMissil();
-        verificaColisaoLaser();
-        movimentarAlien();
-        desenhaAlien();
-        desenhaMisseis();
-        adicionarDisparosDosAliens();
-        movimentaLasers();
-        desenhaLasers();
-        fill(255);
-        textSize(30);
-        text("Pontuação: " + pontuacao, 10, 80);
-
+    if(cenaAtual == cenas.jogo){
+       desenharCenaJogo();
+    }else if(cenaAtual == cenas.vitoria){
+        desenharCenaVitoria();
+    }if(cenaAtual == cenas.derrota){
+        desenharCenaDerrota();
     }
-
 }
+
+function desenharCenaJogo(){
+    if(todosAliensEstaoMortos() == true){
+        cenaAtual = cenas.vitoria;
+    }
+    movimentaMisseis();
+    //centralizando a posição da nave
+    posicaoNave.x = mouseX - imagemNave.width / 2;
+    //desenhar a nave
+    image(imagemNave, posicaoNave.x, posicaoNave.y);
+
+    verificaColisaoMissil();
+    verificaColisaoLaser();
+    movimentarAlien();
+    desenhaAlien();
+    desenhaMisseis();
+    adicionarDisparosDosAliens();
+    movimentaLasers();
+    desenhaLasers();
+    fill(255);
+    textSize(30);
+    text("Pontuação: " + pontuacao, 10, 80);
+}
+
+function desenharCenaVitoria(){
+    textSize(80);
+    textAlign(CENTER);
+    text("Parabéns", width / 2, height / 2);
+}
+
+function desenharCenaDerrota(){
+    textSize(80);
+    textAlign(CENTER);
+    text("Game Over", width / 2, height / 2);
+}
+
 //quando o mouse for pressionado
 function mousePressed() {
     posicoesMisseis.push(createVector(mouseX - imagemMissil.width / 2, posicaoNave.y));
@@ -115,6 +140,8 @@ function verificaColisaoLaser(){
     for(let laser of lasers){
         if(colidiu(laser, imagemLaser,posicaoNave, imagemNave )){
             console.log("Perdeu");
+            //ir para cena de derrota
+            cenaAtual = cenas.derrota;
         }
     }
 }
