@@ -1,4 +1,4 @@
-let cenas = {
+const cenas = {
     jogo : 0,
     vitoria : 1,
     derrota: 2
@@ -34,7 +34,7 @@ function setup() {
 function calcularDeltaTime(){
     let tempoAtual = millis(); //tempo desde o inicio do jogo
     deltaTime = tempoAtual - ultimaChamada;
-    ultimaChamada = tempoAtual; // ultima chamada é igual ao tmepo atual
+    ultimaChamada = tempoAtual; // ultima chamada é igual ao tempo atual
     deltaTime = deltaTime / 1000; //convertendo para segundos 
 }
 //desenhando nosso atores - igual ao bloco "sempre" do scracth
@@ -47,13 +47,13 @@ function draw() {
        desenharCenaJogo();
     }else if(cenaAtual == cenas.vitoria){
         desenharCenaVitoria();
-    }if(cenaAtual == cenas.derrota){
+    }else if(cenaAtual == cenas.derrota){
         desenharCenaDerrota();
     }
 }
 
 function desenharCenaJogo(){
-    if(todosAliensEstaoMortos() == true){
+    if(todosAliensEstaoMortos()){
         cenaAtual = cenas.vitoria;
     }
     movimentaMisseis();

@@ -1,6 +1,6 @@
 const tamanhoDoAlien = 100;
 const distanciaDoTopo = 100;
-const chanceDeAtirar = 0;
+const chanceDeAtirar = 0.0015;
 let imagensAlien = new Array();
 let aliens = new Array();
 
@@ -30,13 +30,13 @@ function desenhaAlien() {
 }
 
 function movimentarAlien() {
-    deslocamentoAlien = deslocamentoAlien + velocidadeAlien;
+    deslocamentoAlien += velocidadeAlien;
     let indiceUltimoAlien = Math.min(colunas - 1, quantidadeAliens -1);
     let posicaoUltimoAlien = calcularPosicaoAlien(indiceUltimoAlien);
     let posicaoPrimeiroAlien = calcularPosicaoAlien(0);
     let imagemUltimoAlien = imagensAlien[0];
-    if (posicaoUltimoAlien.x + imagemUltimoAlien.width > 900 || posicaoPrimeiroAlien.x < 0) {
-        velocidadeAlien = velocidadeAlien * -1;
+    if (posicaoUltimoAlien.x + imagemUltimoAlien.width > width || posicaoPrimeiroAlien.x < 0) {
+        velocidadeAlien *= -1;
     }
 }
 
@@ -56,7 +56,7 @@ function alienEstaMorto(fantasia) {
 
 function todosAliensEstaoMortos() {
     for (let alien of aliens) {
-        if (alienEstaMorto(alien) == false) {
+        if (!alienEstaMorto(alien)) {
             return false;
         }
     }
@@ -65,7 +65,7 @@ function todosAliensEstaoMortos() {
 
 function adicionarDisparosDosAliens() {
     for (let i = 0; i < quantidadeAliens; i++) {
-        if (alienEstaMorto(aliens[i]) == true) {
+        if (alienEstaMorto(aliens[i])) {
             continue;
         }
 

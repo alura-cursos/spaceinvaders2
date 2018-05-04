@@ -1,4 +1,4 @@
-const tempoEntreDisparos = .8; //tempo em segundos
+const tempoEntreDisparos = 0.8; //tempo em segundos
 let imagemNave;
 let posicaoNave;
 let possoAtirar;
@@ -20,14 +20,14 @@ function movimentarNave(){
 }
 
 function atirar(){
-    if(possoAtirar == true){
+    if(possoAtirar){
         posicoesMisseis.push(createVector(mouseX - imagemMissil.width / 2, posicaoNave.y));
         possoAtirar = false;
     }
 }
 
 function recarregarMissil(){
-    if(possoAtirar == false){
+    if(!possoAtirar){
         cronometroRecarregar = cronometroRecarregar-deltaTime;
         if(cronometroRecarregar < 0){
             possoAtirar = true;
