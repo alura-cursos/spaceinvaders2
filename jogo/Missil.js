@@ -4,8 +4,12 @@ let imagemMissil;
 
 function movimentaMisseis() {
     //para cada posicao dentro da lista de posições -> mover o míssil para cima
-    for (let posicao of posicoesMisseis) {
+    for (let i= posicoesMisseis.length-1 ; i >= 0 ; i = i-1) {
+        let posicao = posicoesMisseis[i];
         posicao.y = posicao.y - velocidadeMissil;
+        if(estaForaDaTela(posicao.y)){
+            posicoesMisseis.splice(i,1);
+        }
     }
 }
 

@@ -97,6 +97,13 @@ function colidiu(posicaoObjeto, imagemObjeto, posicaOutro, imagemOutro) {
     return true
 }
 
+function estaForaDaTela(posicaoY){
+    if(posicaoY < 0 || posicaoY > height){
+        return true;
+    }
+    return false;
+}
+
 function reiniciar(){
     cenaAtual = cenas.jogo;
     lasers = new Array();

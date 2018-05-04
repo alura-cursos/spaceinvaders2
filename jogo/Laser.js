@@ -18,7 +18,13 @@ function desenhaLasers() {
 }
 
 function movimentaLasers() {
-    for (let laser of lasers) {
+    for (let i = lasers.length-1 ; i >= 0 ; i = i-1) {
+        let laser = lasers[i];
         laser.y = laser.y + velocidadeLaser;
+        if(estaForaDaTela(laser.y) == true){
+            //Tirar o laser da lista
+            lasers.splice(i, 1);
+
+        }
     }
 }
