@@ -1,6 +1,6 @@
 const tamanhoDoAlien = 100;
-const distanciaDoTopo = 150;
-let chanceDeAtirar = 0.005;
+const distanciaDoTopo = 100;
+const chanceDeAtirar = 0;
 let imagensAlien = new Array();
 let aliens = new Array();
 
@@ -31,7 +31,8 @@ function desenhaAlien() {
 
 function movimentarAlien() {
     deslocamentoAlien = deslocamentoAlien + velocidadeAlien;
-    let posicaoUltimoAlien = calcularPosicaoAlien(quantidadeAliens - 1);
+    let indiceUltimoAlien = Math.min(colunas - 1, quantidadeAliens -1);
+    let posicaoUltimoAlien = calcularPosicaoAlien(indiceUltimoAlien);
     let posicaoPrimeiroAlien = calcularPosicaoAlien(0);
     let imagemUltimoAlien = imagensAlien[0];
     if (posicaoUltimoAlien.x + imagemUltimoAlien.width > 900 || posicaoPrimeiroAlien.x < 0) {
