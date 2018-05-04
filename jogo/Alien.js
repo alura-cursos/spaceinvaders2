@@ -1,10 +1,13 @@
+const tamanhoDoAlien = 100;
+const distanciaDoTopo = 150;
 let chanceDeAtirar = 0.005;
 let imagensAlien = new Array();
 let aliens = new Array();
 
 let deslocamentoAlien = 0;
-let quantidadeAliens = 5;
+let quantidadeAliens = 15;
 let velocidadeAlien = 2;
+let colunas = 6;
 
 function inicializarAliens(){
     for (let i = 0; i < quantidadeAliens; i = i + 1) {
@@ -38,8 +41,11 @@ function movimentarAlien() {
 
 function calcularPosicaoAlien(indiceAlien) {
     let posicao = createVector();
-    posicao.x = indiceAlien * 100 + deslocamentoAlien;
-    posicao.y = 150;
+    let linha = Math.floor(indiceAlien / colunas);
+    let coluna = indiceAlien % colunas;
+
+    posicao.x = coluna * tamanhoDoAlien + deslocamentoAlien;
+    posicao.y = linha * tamanhoDoAlien + distanciaDoTopo;
     return posicao;
 }
 

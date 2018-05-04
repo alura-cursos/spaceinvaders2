@@ -6,7 +6,8 @@ let cenas = {
 let pontuacao = 0;
 let trilhaSonora;
 let cenaAtual = 0;
-
+let deltaTime = 0;
+let ultimaChamada = 0;
 //preparando o ambiente de trabalho
 //carrengado as fantasias do nosso jogo
 function preload() {
@@ -30,8 +31,15 @@ function setup() {
     inicializarAliens();
 }
 
+function calcularDeltaTime(){
+    let tempoAtual = millis(); //tempo desde o inicio do jogo
+    deltaTime = tempoAtual - ultimaChamada;
+    ultimaChamada = tempoAtual; // ultima chamada é igual ao tmepo atual
+    deltaTime = deltaTime / 1000; //convertendo para segundos 
+}
 //desenhando nosso atores - igual ao bloco "sempre" do scracth
 function draw() {
+    calcularDeltaTime()
     // pintar o fundo do palco de cinza
     background(100);
 
