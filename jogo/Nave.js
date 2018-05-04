@@ -1,7 +1,11 @@
+const tempoEntreDisparos = 60;
 let imagemNave;
 let posicaoNave;
+let possoAtirar;
+let cronometroRecarregar = tempoEntreDisparos;
 
 function inicializarNave(){
+    possoAtirar = true;
     posicaoNave = createVector(400, 500);
 }
 
@@ -13,4 +17,21 @@ function desenharNave(){
 function movimentarNave(){
     //centralizando a posição da nave
     posicaoNave.x = mouseX - imagemNave.width / 2;
+}
+
+function atirar(){
+    if(possoAtirar == true){
+        posicoesMisseis.push(createVector(mouseX - imagemMissil.width / 2, posicaoNave.y));
+        possoAtirar = false;
+    }
+}
+
+function recarregarMissil(){
+    if(possoAtirar == false){
+        cronometroRecarregar = cronometroRecarregar-1;
+        if(cronometroRecarregar < 0){
+            possoAtirar = true;
+            cronometroRecarregar = tempoEntreDisparos;
+        }
+    }
 }

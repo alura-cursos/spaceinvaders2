@@ -51,6 +51,7 @@ function desenharCenaJogo(){
     movimentaMisseis();
     movimentarNave();
     desenharNave();
+    recarregarMissil();
 
     verificaColisaoMissil();
     verificaColisaoLaser();
@@ -81,7 +82,7 @@ function desenharCenaDerrota(){
 //quando o mouse for pressionado
 function mousePressed() {
     if(cenaAtual == cenas.jogo){
-        posicoesMisseis.push(createVector(mouseX - imagemMissil.width / 2, posicaoNave.y));
+       atirar();
     }else{
         reiniciar();
     }
