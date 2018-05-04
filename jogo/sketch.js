@@ -103,7 +103,7 @@ function colidiu(posicaoObjeto, imagemObjeto, posicaOutro, imagemOutro) {
         posicaoObjeto.y + imagemObjeto.height < posicaOutro.y)) {
         return false;
     }
-    return true
+    return true;
 }
 
 function estaForaDaTela(posicaoY){

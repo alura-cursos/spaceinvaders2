@@ -5,9 +5,9 @@ let imagensAlien = new Array();
 let aliens = new Array();
 
 let deslocamentoAlien = 0;
-let quantidadeAliens = 15;
+let quantidadeAliens = 10;
 let velocidadeAlien = 2;
-let colunas = 6;
+let colunas = 5;
 
 function inicializarAliens(){
     for (let i = 0; i < quantidadeAliens; i = i + 1) {
