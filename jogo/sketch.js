@@ -1,11 +1,13 @@
 let cenas = {
-    jogo : 0,
-    vitoria : 1,
+    jogo: 0,
+    vitoria: 1,
     derrota: 2
 }
 let pontuacao = 0;
 let trilhaSonora;
 let cenaAtual = 0;
+let deltaTime = 0;
+let ultimaChamada = 0;
 
 //preparando o ambiente de trabalho
 //carrengado as fantasias do nosso jogo
@@ -30,22 +32,30 @@ function setup() {
     inicializarAliens();
 }
 
+function calcularDeltaTime() {
+    let tempoAtual = millis(); //tempo desde o inicio do jogo
+    deltaTime = tempoAtual - ultimaChamada;
+    ultimaChamada = tempoAtual; // ultima chamada é igual ao tmepo atual
+    deltaTime = deltaTime / 1000; //convertendo para segundos 
+}
+
 //desenhando nosso atores - igual ao bloco "sempre" do scracth
 function draw() {
+    calcularDeltaTime()
     // pintar o fundo do palco de cinza
     background(100);
 
-    if(cenaAtual == cenas.jogo){
-       desenharCenaJogo();
-    }else if(cenaAtual == cenas.vitoria){
+    if (cenaAtual == cenas.jogo) {
+        desenharCenaJogo();
+    } else if (cenaAtual == cenas.vitoria) {
         desenharCenaVitoria();
-    }if(cenaAtual == cenas.derrota){
+    } if (cenaAtual == cenas.derrota) {
         desenharCenaDerrota();
     }
 }
 
-function desenharCenaJogo(){
-    if(todosAliensEstaoMortos() == true){
+function desenharCenaJogo() {
+    if (todosAliensEstaoMortos() == true) {
         cenaAtual = cenas.vitoria;
     }
     movimentaMisseis();
@@ -67,13 +77,13 @@ function desenharCenaJogo(){
     text("Pontuação: " + pontuacao, 10, 80);
 }
 
-function desenharCenaVitoria(){
+function desenharCenaVitoria() {
     textSize(80);
     textAlign(CENTER);
     text("Parabéns", width / 2, height / 2);
 }
 
-function desenharCenaDerrota(){
+function desenharCenaDerrota() {
     textSize(80);
     textAlign(CENTER);
     text("Game Over", width / 2, height / 2);
@@ -81,9 +91,9 @@ function desenharCenaDerrota(){
 
 //quando o mouse for pressionado
 function mousePressed() {
-    if(cenaAtual == cenas.jogo){
-       atirar();
-    }else{
+    if (cenaAtual == cenas.jogo) {
+        atirar();
+    } else {
         reiniciar();
     }
 }
@@ -98,14 +108,14 @@ function colidiu(posicaoObjeto, imagemObjeto, posicaOutro, imagemOutro) {
     return true
 }
 
-function estaForaDaTela(posicaoY){
-    if(posicaoY < 0 || posicaoY > height){
+function estaForaDaTela(posicaoY) {
+    if (posicaoY < 0 || posicaoY > height) {
         return true;
     }
     return false;
 }
 
-function reiniciar(){
+function reiniciar() {
     cenaAtual = cenas.jogo;
     lasers = new Array();
     posicoesMisseis = new Array();

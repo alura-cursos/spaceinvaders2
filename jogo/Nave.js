@@ -1,4 +1,4 @@
-const tempoEntreDisparos = 60;
+const tempoEntreDisparos = .8; //tempo em segundos
 let imagemNave;
 let posicaoNave;
 let possoAtirar;
@@ -28,7 +28,7 @@ function atirar(){
 
 function recarregarMissil(){
     if(possoAtirar == false){
-        cronometroRecarregar = cronometroRecarregar-1;
+        cronometroRecarregar = cronometroRecarregar-deltaTime;
         if(cronometroRecarregar < 0){
             possoAtirar = true;
             cronometroRecarregar = tempoEntreDisparos;
